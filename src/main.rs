@@ -1,50 +1,74 @@
 use std::{
     fs::File,
-    io::{BufReader, BufRead},
+    io::{BufReader, BufRead}, collections::{HashSet},
 };
 
 fn main() {
     println!("Hello, worldddd!");
 
-    let file_path = "data/1.txt";
+    let file_path = "data/3.txt";
 
     let file = File::open(file_path).expect("file should be defined");
     let lines = BufReader::new(file).lines();
 
-    let mut elves = Vec::new();
 
-    let mut sum = 0;
+
+    let mut score = 0;
     for line in lines {
         if let Ok(l) = line {
-            if l.eq("") {
-                println!("empty line");
-                elves.push(sum);
-                sum = 0;
-            } else {
-                println!("the line: {}", l);
-                sum += l.parse::<i32>().expect("string should be a number");
+            //  TODO find the item which is duplicated across compartments
+            // just make a set? of each side, then iterate the set, and check if the other set has it.
+
+            // also: computing priorities: compute a charcode offset?  Alternatively: specify each value?
+
+
+            let mut left: HashSet<&str> = HashSet::new();
+            let mut right: HashSet<&str> = HashSet::new();
+
+            // TODO get a slice of half the length
+            let half_index = l.len() / 2;
+            let left_string_half = &l[..half_index];
+            let right_string_half = &l[half_index..];
+
+            for character in left_string_half.split("") {
+                left.insert(character);
+            }
+
+            println!("leftSet: {:?}", left);
+
+            for character in right_string_half.split("") {
+                right.insert(character);
+            }
+
+            println!("rightSet: {:?}", right);
+
+            for character in left {
+                if let Some(&val) = right.get(character) {
+                    println!("Found the duplicate: {}", val);
+                    break;
+                }
+            }
+
+            score += 1;
+            if score == 3 {
+                break;
             }
         } else {
             panic!("line was not Ok");
         }
     }
 
-    elves.push(sum);
-    sum = 0;
+    println!("total score: {}", score);
+}
 
-    println!("current sum: {}", sum);
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn it_works() {
+        let a_string = "asdfgg";
 
-    println!("the vector: {:?}", elves);
+        let len = a_string.len() / 2;
 
-    elves.sort();
-
-    println!("the vector: {:?}", elves);
-
-    println!("largest calorie count: {}", &elves[elves.len() - 1]);
-
-    let top_three = &elves[elves.len() - 3 ..];
-
-    println!("the top three: {:?}", top_three);
-
-    println!("total top three calories: {}", top_three.iter().sum::<i32>())
+        assert_eq!(len, 4);
+    }
 }
