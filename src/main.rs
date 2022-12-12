@@ -81,7 +81,7 @@ fn main() {
                         // move filesystem pointer to dir.  Dir must exist.
 
                         println!("cd into this dir: {}", dest_token);
-                        let current_location = path_history.last().expect("path_history should not be empty");
+                        let current_location = **path_history.last().expect("path_history should not be empty");
 
                         path_history.push(
                                 current_location.child_dirs.get_mut(dest_token).expect("dir should exist (have been discovered) before we cd into it")
