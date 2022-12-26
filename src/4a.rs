@@ -20,7 +20,8 @@ fn main() {
 
     impl Pair {
         fn fully_contains(&self) -> bool {
-            self.a_start <= self.b_end && self.a_end >= self.b_start
+            self.a_start <= self.b_start && self.a_end >= self.b_end
+            || self.b_start <= self.a_start && self.b_end >= self.a_end
         }
     }
 
