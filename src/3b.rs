@@ -51,6 +51,7 @@ fn main() {
     }
 
     let mut groups = Vec::new();
+    // TODO instead of adding a library to call chunks on an iter, I should have used navtive .chunks on a vec
     for mut chunk in &line_strings.into_iter().chunks(3) {
         let one = chunk.next().expect("first group member should exist");
         let two = chunk.next().expect("second group member should exist");
