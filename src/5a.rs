@@ -57,9 +57,11 @@ fn main() {
             let from: usize = split_line[3].parse().expect("should bed a number");
             let to: usize = split_line[5].parse().expect("should bed a number");
 
-            let buf: Vec<char> = stacks[from - 1].drain(0..qty).collect();
-            for ch in buf.iter().rev() {
-                stacks[to - 1].push_front(*ch);
+            for _ in 0..qty {
+                let popped = stacks[from - 1].pop_front();
+                if let Some(ch) = popped {
+                    stacks[to - 1].push_front(ch);
+                }
             }
 
             println!("moving stuff ...");
