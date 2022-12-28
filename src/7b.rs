@@ -21,6 +21,7 @@ fn main() {
     struct Dir {
         name: String,
         child_dirs: HashMap<String, Dir>,
+        // TODO we don't actually need the file names and sizes like this. Could just add all sibling files into one number.
         child_files: HashMap<String, FileItem>,
     }
 
