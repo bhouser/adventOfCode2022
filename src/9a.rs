@@ -1,7 +1,7 @@
 use std::{
     fs::File,
     io::{BufReader, BufRead},
-    collections::HashSet, cmp,
+    collections::HashSet,
 };
 
 #[derive(Debug)]
